@@ -33,7 +33,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     thumbnail = ImageSpecField(source='avatar', processors=[ResizeToFill(50, 50)], format='JPEG',
                                options={'quality': 60})  # create thumbnail image for user
-
     gender = models.CharField(max_length=255, choices=GENDER, default='Male')
     birth_date = models.DateField(blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.PROTECT, related_name='users', null=True, blank=True)

@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import signup
+from .views import signup, load_cities
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
@@ -17,6 +17,8 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
     path('signup/', signup, name='signup'),
+
+    path('ajax/load-cities/', load_cities, name='ajax_load_cities'),  # <-- ajx for cities filter
 
 ]
 

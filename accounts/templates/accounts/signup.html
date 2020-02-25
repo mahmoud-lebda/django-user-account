@@ -2,28 +2,79 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <h2>Sign up</h2>
-  <form enctype="multipart/form-data" method="post" novalidate>
+<h2>Sign up</h2>
+<form data-cities-url="{% url 'ajax_load_cities' %}" enctype="multipart/form-data" id="register_form" method="POST" novalidate>
     {% csrf_token %}
-           {{ form.email|as_crispy_field }}
-              <div class="form-row">
+    {{ form.email|as_crispy_field }}
+    <div class="form-row">
+        <div class="form-group col-md-6 mb-0">
+            {{ form.first_name|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-6 mb-0">
+            {{ form.last_name|as_crispy_field }}
+        </div>
+    </div> <!--name-->
+    <div class="form-row">
+        <div class="form-group col-md-6 mb-0">
+            {{ form.password1|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-6 mb-0">
+            {{ form.password2|as_crispy_field }}
+        </div>
+    </div> <!--passwords-->
+    {{ form.avatar|as_crispy_field }}
+    {{ form.gender|as_crispy_field }}
+    {{ form.birth_date|as_crispy_field }}
+    <div class="form-row">
+        <div class="form-group col-md-6 mb-0">
+            {{ form.specialist|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-6 mb-0">
+            {{ form.job_title|as_crispy_field }}
+        </div>
+    </div> <!--title-->
+            <div class="form-row">
             <div class="form-group col-md-6 mb-0">
-                {{ form.first_name|as_crispy_field }}
+                {{ form.governorate|as_crispy_field }}
             </div>
             <div class="form-group col-md-6 mb-0">
-                {{ form.last_name|as_crispy_field }}
+                {{ form.city|as_crispy_field }}
             </div>
-        </div> <!--passwords-->
-        <div class="form-row">
-            <div class="form-group col-md-6 mb-0">
-                {{ form.password1|as_crispy_field }}
-            </div>
-            <div class="form-group col-md-6 mb-0">
-                {{ form.password2|as_crispy_field }}
-            </div>
-        </div> <!--passwords-->
-         {{ form.avatar|as_crispy_field }}
+        </div> <!--gov & city-->
+        {{ form.address|as_crispy_field }}
+         {{ form.whatsapp|as_crispy_field }}
+        {{ form.facebook|as_crispy_field }}
+        {{ form.youtube|as_crispy_field }}
+        {{ form.twitter|as_crispy_field }}
+        {{ form.google|as_crispy_field }}
+        {{ form.instagram|as_crispy_field }}
+
 
     <button type="submit">Sign up</button>
-  </form>
+</form>
 {% endblock %}
+
+    {% block javascript %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+   <!-- Script for ajx filter -->
+<script>
+    $("#id_governorate").change(function () {
+      var url = $("#register_form").attr("data-cities-url");  // get the url of the `load_cities` view
+      var governorateId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'governorate': governorateId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_city").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+
+</script>
+    {% endblock javascript %}
