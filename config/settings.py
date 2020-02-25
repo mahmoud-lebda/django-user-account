@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'crispy_forms',
 
     # own
+    'core',
+    'accounts',
 
 
 ]
@@ -64,7 +66,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -143,7 +145,20 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
+# email settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'gator4121.hostgator.com'
+# EMAIL_PORT = 25
+# EMAIL_HOST_USER = 'django@opelownersgang.com'
+# EMAIL_HOST_PASSWORD = 'Lebda61381'
+# EMAIL_USE_TLS = False
 
 # crispy forms settings
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# new user model
+
+AUTH_USER_MODEL = 'accounts.User'
