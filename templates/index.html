@@ -7,5 +7,6 @@
 <p>{{ user.first_name }}</p>
 <p>{{ user.last_name }}</p>
 <p>{{ user.email }}</p>
-
+<img src="{{ user.avatar.url }}"/>
+<img src="{{ user.avatar_thumbnail.url }}"/>
 {% endblock content %}

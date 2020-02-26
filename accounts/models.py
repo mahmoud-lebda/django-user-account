@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 
 from imagekit.models import ImageSpecField
-from pilkit.processors import ResizeToFill
+from imagekit.processors import ResizeToFill, Adjust
 
 from .managers import UserManager
 from core.models import City
@@ -31,8 +31,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
 
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
-    thumbnail = ImageSpecField(source='avatar', processors=[ResizeToFill(50, 50)], format='JPEG',
-                               options={'quality': 60})  # create thumbnail image for user
+    avatar_thumbnail = ImageSpecField(source='avatar',
+                                      processors=[ResizeToFill(100, 100)],
+                                      format='JPEG',
+                                      options={'quality': 60})
+
     gender = models.CharField(max_length=255, choices=GENDER, default='Male')
     birth_date = models.DateField(blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.PROTECT, related_name='users', null=True, blank=True)
