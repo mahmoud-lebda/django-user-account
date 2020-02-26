@@ -48,6 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     google = models.URLField(null=True, blank=True)
     instagram = models.URLField(null=True, blank=True)
 
+    email_confirmed = models.BooleanField(default=False)
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('is_staff'), default=False)

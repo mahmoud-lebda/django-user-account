@@ -149,11 +149,11 @@ MEDIA_URL = '/media/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'gator4121.hostgator.com'
-# EMAIL_PORT = 25
-# EMAIL_HOST_USER = 'django@opelownersgang.com'
-# EMAIL_HOST_PASSWORD = 'Lebda61381'
-# EMAIL_USE_TLS = False
+# EMAIL_HOST =
+# EMAIL_PORT =
+# EMAIL_HOST_USER =
+# EMAIL_HOST_PASSWORD =
+# EMAIL_USE_TLS =
 
 # crispy forms settings
 

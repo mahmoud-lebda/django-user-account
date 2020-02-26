@@ -1,10 +1,11 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import signup, load_cities
+from .views import signup, load_cities, account_activation_sent, activate
+
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='accounts/logged_out.html')),
+    path('logout/', auth_views.LogoutView.as_view(template_name='accounts/logged_out.html'), name='logout'),
 
     path('password-change/', auth_views.PasswordChangeView.as_view(
         template_name='accounts/change-password.html'), name='password_change'),
@@ -20,6 +21,8 @@ urlpatterns = [
 
     path('ajax/load-cities/', load_cities, name='ajax_load_cities'),  # <-- ajx for cities filter
 
+    path('account_activation_sent/', account_activation_sent, name='account_activation_sent'),
+    path('activate/<str:uidb64>/<str:token>', activate, name='activate'),
 ]
 
 

@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
-from core.views import sendmail
+from core.views import sendmail, home
 
 urlpatterns = [
+    path('', home, name='home'),
     path('admin/', admin.site.urls),
     path('email/', sendmail),
     path('accounts/', include('accounts.urls')),
