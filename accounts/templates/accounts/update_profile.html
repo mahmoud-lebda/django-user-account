@@ -3,15 +3,9 @@
 
 {% block content %}
 
-
-{% if user.is_authenticated %}
-    <p>Welcome, {{ user.get_full_name }}. you are logging in.</p>
-    <p><a href="{% url 'logout' %}?next={% url 'signup' %}">logout.</a></p>
-{% else %}
-<h2>Sign up</h2>
+<h2>Update Profile</h2>
 <form data-cities-url="{% url 'ajax_load_cities' %}" enctype="multipart/form-data" id="register_form" method="POST" novalidate>
     {% csrf_token %}
-    {{ form.email|as_crispy_field }}
     <div class="form-row">
         <div class="form-group col-md-6 mb-0">
             {{ form.first_name|as_crispy_field }}
@@ -20,15 +14,6 @@
             {{ form.last_name|as_crispy_field }}
         </div>
     </div> <!--name-->
-    <div class="form-row">
-        <div class="form-group col-md-6 mb-0">
-            {{ form.password1|as_crispy_field }}
-        </div>
-        <div class="form-group col-md-6 mb-0">
-            {{ form.password2|as_crispy_field }}
-        </div>
-    </div> <!--passwords-->
-    {{ form.avatar|as_crispy_field }}
     {{ form.gender|as_crispy_field }}
     {{ form.birth_date|as_crispy_field }}
     <div class="form-row">
@@ -58,12 +43,11 @@
 
     <button type="submit">Sign up</button>
 </form>
-{% endif %}
 {% endblock %}
 
     {% block javascript %}
    {{ block.super }}
-      <!-- Script for ajx filter -->
+<!-- Script for ajx filter -->
 <script>
     $("#id_governorate").change(function () {
       var url = $("#register_form").attr("data-cities-url");  // get the url of the `load_cities` view

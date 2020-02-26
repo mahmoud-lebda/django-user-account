@@ -1,4 +1,5 @@
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes
@@ -9,7 +10,7 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 
 
-from .forms import SignUpForm
+from .forms import SignUpForm, UpdateProfile
 from core.models import City
 from .tokens import account_activation_token
 
@@ -80,3 +81,27 @@ def load_cities(request):
     cities = City.objects.filter(governorate_id=governorate_id).order_by('title')
     print(request.GET.get('governorate'))
     return render(request, 'accounts/city_dropdown_list_options.html', {'cities': cities})
+
+
+@login_required()
+def profile(request):
+    return render(request, 'accounts/profile.html')
+
+
+@login_required()
+def update_profile(request):
+    if request.method == 'POST':
+        user_profile = UpdateProfile(request.POST, instance=request.user)
+        if user_profile.is_valid():
+            user_profile.save()
+            # messages.success(request, _('Your profile was successfully updated!'))
+            return redirect('profile')
+        else:
+            return redirect('profile')
+            # messages.error(request, _('Please correct the error below.'))
+    else:
+
+        user_profile = UpdateProfile(instance=request.user)
+    return render(request, 'accounts/update_profile.html', {'form': user_profile, })
+
+

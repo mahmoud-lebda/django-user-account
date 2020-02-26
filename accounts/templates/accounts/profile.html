@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<p><strong>First Name: </strong>{{ user.first_name }}</p>
+<p><strong>Last Name: </strong>{{ user.last_name }}</p>
+<p><strong>Email: </strong>{{ user.email }}</p>
+<p><strong>gender</strong>{{ user.gender }}</p>
+<p><strong>birth_date</strong>{{ user.birth_date }}</p>
+<p><strong>Governorate: </strong>{{ user.city.governorate }}</p>
+<p><strong>city: </strong>{{ user.city }}</p>
+<p><strong>address: </strong>{{ user.address }}</p>
+<p><strong>whatsapp: </strong>{{ user.whatsapp }}</p>
+<p><strong>specialist:</strong>{{ user.specialist }}</p>
+<p><strong>job_title: </strong>{{ user.job_title }}</p>
+<p><strong>facebook: </strong>{{ user.facebook }}</p>
+<p><strong>youtube: </strong>{{ user.youtube }}</p>
+<p><strong>twitter: </strong>{{ user.twitter }}</p>
+<p><strong>google: </strong>{{ user.google }}</p>
+<p><strong>instagram: </strong>{{ user.instagram }}</p>
+
+<p><strong>date_create: </strong>{{ user.date_create }}</p>
+
+{% endblock content %}

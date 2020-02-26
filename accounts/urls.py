@@ -1,11 +1,12 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import signup, load_cities, account_activation_sent, activate
+from .views import signup, load_cities, account_activation_sent, activate,\
+    profile, update_profile
 
 
 urlpatterns = [
-    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='accounts/logged_out.html'), name='logout'),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     path('password-change/', auth_views.PasswordChangeView.as_view(
         template_name='accounts/change-password.html'), name='password_change'),
@@ -23,6 +24,9 @@ urlpatterns = [
 
     path('account_activation_sent/', account_activation_sent, name='account_activation_sent'),
     path('activate/<str:uidb64>/<str:token>', activate, name='activate'),
+
+    path('profile/', profile, name='profile'),
+    path('update_profile', update_profile, name='update_profile'),
 ]
 
 
