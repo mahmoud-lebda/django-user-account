@@ -123,6 +123,8 @@ def email_change(request):
             })
             current_user.email_user(subject, message)
             return redirect('account_activation_sent')
+        else:  # if the form is not valid, pass the invalid form in the context
+            return render(request, 'accounts/email_change.html', {'form': form, })
     form = EmailChangeForm(user=request.user)
     return render(request, 'accounts/email_change.html', {'form': form, })
 
