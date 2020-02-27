@@ -1,7 +1,8 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import signup, load_cities, account_activation_sent, activate,\
-    profile, update_profile
+    profile, update_profile, email_change, activate_change
+
 
 
 urlpatterns = [
@@ -26,7 +27,9 @@ urlpatterns = [
     path('activate/<str:uidb64>/<str:token>', activate, name='activate'),
 
     path('profile/', profile, name='profile'),
-    path('update_profile', update_profile, name='update_profile'),
+    path('update-profile/', update_profile, name='update_profile'),
+    path('change-email/', email_change, name='chane_email'),
+    path('change-email/<str:uidb64>/<str:token>', activate_change, name='activate_change'),
 ]
 
 

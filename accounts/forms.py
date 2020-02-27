@@ -7,6 +7,9 @@ User = get_user_model()
 
 
 class SignUpForm(UserCreationForm):
+    """
+    form for signup.
+    """
     governorate = forms.ModelChoiceField(queryset=Governorate.objects.all().order_by('title'), label='Governorate')
 
     class Meta:
@@ -70,4 +73,45 @@ class UpdateProfile(forms.ModelForm):
         # self.fields['birth_date'].required = True
 
 
+class EmailChangeForm(forms.Form):
+    current_password = forms.CharField(
+        label='Current Password',
+        widget=forms.PasswordInput,
+        required=True
+    )
 
+    new_email = forms.EmailField(
+        label='New E-mail Address',
+        max_length=254,
+        required=True
+    )
+
+    def clean_current_password(self):
+        """
+        Validates that the password field is correct.
+        """
+        current_password = self.cleaned_data["current_password"]
+        if not self.user.check_password(current_password):
+            print('error1')
+            raise forms.ValidationError('Incorrect password.')
+        return current_password
+
+    def clean_new_email(self):
+        """
+        Prevents an e-mail address that is already registered from being registered by a different user.
+        """
+        print('error2')
+        email = self.cleaned_data.get('new_email')
+        if User.objects.filter(email=email).count() > 0 or User.objects.filter(temp_email=email).count() > 0:
+            raise forms.ValidationError('This e-mail address cannot be used. Please select a different e-mail address.')
+        return email
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(EmailChangeForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        self.user.temp_email = self.cleaned_data['new_email']
+        if commit:
+            self.user.save()
+        return self.user
