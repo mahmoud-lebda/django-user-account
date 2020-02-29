@@ -4,9 +4,8 @@ from .views import signup, load_cities, account_activation_sent, activate,\
     profile, update_profile, email_change, activate_change
 
 
-
 urlpatterns = [
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     path('password-change/', auth_views.PasswordChangeView.as_view(
