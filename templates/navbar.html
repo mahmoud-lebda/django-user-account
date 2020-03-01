@@ -12,6 +12,8 @@
         </div>
         <!-- sidebar-menu  -->
         <div class=" sidebar-item sidebar-menu">
+            {% if user.is_authenticated %}
+
             <ul>
                 <li class="sidebar-dropdown">
                     <a href="#">
@@ -143,6 +145,7 @@
                     </a>
                 </li>
             </ul>
+             {% endif %}
         </div>
         <!-- sidebar-menu  -->
     </div>
@@ -278,7 +281,7 @@
                 <span class="badge-sonar"></span>
             </a>
             <div aria-labelledby="dropdownMenuMessage" class="dropdown-menu">
-                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
                 <a class="dropdown-item" href="#">Help</a>
                 <a class="dropdown-item" href="#" id="pin-sidebar">Pin</a>
                 <a class="dropdown-item" href="#">Setting</a>

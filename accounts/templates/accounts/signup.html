@@ -5,11 +5,12 @@
 
 
 {% if user.is_authenticated %}
-    <p>Welcome, {{ user.get_full_name }}. you are logging in.</p>
-    <p><a href="{% url 'logout' %}?next={% url 'signup' %}">logout.</a></p>
+<p>Welcome, {{ user.get_full_name }}. you are logging in.</p>
+<p><a href="{% url 'logout' %}?next={% url 'signup' %}">logout.</a></p>
 {% else %}
 <h2>Sign up</h2>
-<form data-cities-url="{% url 'ajax_load_cities' %}" enctype="multipart/form-data" id="register_form" method="POST" novalidate>
+<form data-cities-url="{% url 'ajax_load_cities' %}" enctype="multipart/form-data" id="register_form" method="POST"
+      novalidate>
     {% csrf_token %}
     {{ form.email|as_crispy_field }}
     <div class="form-row">
@@ -39,21 +40,21 @@
             {{ form.job_title|as_crispy_field }}
         </div>
     </div> <!--title-->
-            <div class="form-row">
-            <div class="form-group col-md-6 mb-0">
-                {{ form.governorate|as_crispy_field }}
-            </div>
-            <div class="form-group col-md-6 mb-0">
-                {{ form.city|as_crispy_field }}
-            </div>
-        </div> <!--gov & city-->
-        {{ form.address|as_crispy_field }}
-         {{ form.whatsapp|as_crispy_field }}
-        {{ form.facebook|as_crispy_field }}
-        {{ form.youtube|as_crispy_field }}
-        {{ form.twitter|as_crispy_field }}
-        {{ form.google|as_crispy_field }}
-        {{ form.instagram|as_crispy_field }}
+    <div class="form-row">
+        <div class="form-group col-md-6 mb-0">
+            {{ form.governorate|as_crispy_field }}
+        </div>
+        <div class="form-group col-md-6 mb-0">
+            {{ form.city|as_crispy_field }}
+        </div>
+    </div> <!--gov & city-->
+    {{ form.address|as_crispy_field }}
+    {{ form.whatsapp|as_crispy_field }}
+    {{ form.facebook|as_crispy_field }}
+    {{ form.youtube|as_crispy_field }}
+    {{ form.twitter|as_crispy_field }}
+    {{ form.google|as_crispy_field }}
+    {{ form.instagram|as_crispy_field }}
 
 
     <button type="submit">Sign up</button>
@@ -61,25 +62,35 @@
 {% endif %}
 {% endblock %}
 
-    {% block javascript %}
-   {{ block.super }}
-      <!-- Script for ajx filter -->
+{% block javascript %}
+{{ block.super }}
+<!-- Script for ajx filter -->
 <script>
-    $("#id_governorate").change(function () {
-      var url = $("#register_form").attr("data-cities-url");  // get the url of the `load_cities` view
-      var governorateId = $(this).val();  // get the selected country ID from the HTML input
+    $("#id_governorate").change(getCity);
 
+/*
+function to return city when gov change value with ajax
+*/
+    function getCity(){
+     var url = $("#register_form").attr("data-cities-url");  // get the url of the `load_cities` view
+      var governorateId = $(this).val();  // get the selected country ID from the HTML input
       $.ajax({                       // initialize an AJAX request
         url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
         data: {
           'governorate': governorateId       // add the country id to the GET parameters
         },
-        success: function (data) {   // `data` is the return of the `load_cities` view function
-          $("#id_city").html(data);  // replace the contents of the city input with the data that came from the server
-        }
+        success: success
       });
+    }
 
-    });
+/*
+success function to return city html
+*/
+
+function success(data){
+ $("#id_city").html(data);
+}
+
 
 </script>
-    {% endblock javascript %}
+{% endblock javascript %}
