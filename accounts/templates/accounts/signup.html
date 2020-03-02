@@ -91,6 +91,20 @@ function success(data){
  $("#id_city").html(data);
 }
 
+$("#id_password1").keypress(checkpass);
+function checkpass(){
+var pass = $(this).val();
+if (pass.length < 8 ){
+$("#hint_id_password1").removeClass("text-muted");
+$("#hint_id_password1").removeClass("text-success");
+$("#hint_id_password1").addClass("text-danger");
+} else {
+$("#hint_id_password1").removeClass("text-muted");
+$("#hint_id_password1").removeClass("text-danger");
+$("#hint_id_password1").addClass("text-success");
 
+}
+console.log(pass.length)
+}
 </script>
 {% endblock javascript %}
