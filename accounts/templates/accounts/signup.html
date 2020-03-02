@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
-
-
 {% if user.is_authenticated %}
 <p>Welcome, {{ user.get_full_name }}. you are logging in.</p>
 <p><a href="{% url 'logout' %}?next={% url 'signup' %}">logout.</a></p>
@@ -65,31 +64,8 @@
 {% block javascript %}
 {{ block.super }}
 <!-- Script for ajx filter -->
+<script src="{% static 'js/govcity.js' %}"></script>
 <script>
-    $("#id_governorate").change(getCity);
-
-/*
-function to return city when gov change value with ajax
-*/
-    function getCity(){
-     var url = $("#register_form").attr("data-cities-url");  // get the url of the `load_cities` view
-      var governorateId = $(this).val();  // get the selected country ID from the HTML input
-      $.ajax({                       // initialize an AJAX request
-        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-        data: {
-          'governorate': governorateId       // add the country id to the GET parameters
-        },
-        success: success
-      });
-    }
-
-/*
-success function to return city html
-*/
-
-function success(data){
- $("#id_city").html(data);
-}
 
 $("#id_password1").keypress(checkpass);
 function checkpass(){
